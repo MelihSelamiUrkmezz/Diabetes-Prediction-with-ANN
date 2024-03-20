@@ -1,15 +1,11 @@
 import numpy as np;
+import nnfs;
+from nnfs.datasets import spiral_data; # or you can use ./DummyDataGenerator for this. just uncomment underline :)
+# from DummyDataGenerator import spiral_data as mySprialData
 
+nnfs.init();
 
-np.random.seed(0);
-
-X = [
-    [1, 2, 3, 2.5],
-    [2.0, 5.0, -1.0, 2.0],
-    [-1.5, 2.7, 3.3, -0.8]
-];
-
-
+X, y = spiral_data(100, 3);
 class Layer_Dense:
     weights: np.ndarray[any, np.dtype[np.float64]] = None;
     biases : np.ndarray[np.float64] = None;
@@ -30,14 +26,28 @@ class Layer_Dense:
         print('biases', self.biases);  
         print('output', self.output);      
 
+class Activation_Relu:
+    output : np.ndarray[np.float64] = None;
 
-layer1 = Layer_Dense(4, 5);
-layer2 = Layer_Dense(5, 2);
-layer3 = Layer_Dense(2, 1);
+    def __init__(self) -> None:
+        pass
 
+    def forward(self, inputs: np.ndarray[any, np.dtype[np.float64]]):
+        self.output = np.maximum(0, inputs);
+
+    def show_result(self) -> None:
+            print(self.output);
+
+    def show_result(self) -> None:
+        print(self.output);
+
+
+activation = Activation_Relu();
+
+layer1 = Layer_Dense(2, 5);
 layer1.forward(X);
-layer2.forward(layer1.output);
-layer3.forward(layer2.output);
 
-layer3.show_result();
+activation.forward(layer1.output);
+
+activation.show_result();
  
