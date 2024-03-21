@@ -48,7 +48,7 @@ class Activation_Softmax: # exponential function with normalization
         pass
 
     def forward(self, inputs: np.ndarray[any, np.dtype[np.float64]]) -> np.ndarray[any, np.dtype[np.float64]]:
-        exp_values = np.exp(inputs - np.max(inputs, axis=1, keepdims=True)); # for escape infinite value otherwiise code throw exception
+        exp_values = np.exp(inputs - np.max(inputs, axis=1, keepdims=True)); # for escape infinite value otherwiise code throw exception (overflow prevention)
         normalize_exp_values = exp_values / np.sum(exp_values, axis=1, keepdims=True);
         self.output = normalize_exp_values;
         return self.output;
