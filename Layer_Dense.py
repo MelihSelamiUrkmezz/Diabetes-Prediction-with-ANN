@@ -1,11 +1,5 @@
 import numpy as np;
-import nnfs;
-from nnfs.datasets import spiral_data; # or you can use ./DummyDataGenerator for this. just uncomment underline :)
-# from DummyDataGenerator import spiral_data as mySprialData
 
-nnfs.init();
-
-X, y = spiral_data(100, 3);
 class Layer_Dense:
     weights: np.ndarray[any, np.dtype[np.float64]] = None;
     biases : np.ndarray[np.float64] = None;
@@ -44,7 +38,7 @@ class Activation_Relu:
 class Activation_Softmax: # exponential function with normalization
     output : np.ndarray[any, np.dtype[np.float64]] = None;
     
-    def __init__(self) -> None:
+    def __init__(self) -> None: 
         pass
 
     def forward(self, inputs: np.ndarray[any, np.dtype[np.float64]]) -> np.ndarray[any, np.dtype[np.float64]]:
@@ -57,16 +51,47 @@ class Activation_Softmax: # exponential function with normalization
         print(self.output);
 
 
-activation_relu = Activation_Relu();
-activation_softmax = Activation_Softmax();
 
-layer1 = Layer_Dense(2, 5);
-layer1.forward(X);
-activation_relu.forward(layer1.output);
+class Loss_CategoricalCrossentropy:
+    
+    def __init__(self) -> None:
+        pass
+    
+    def forward(self, y_pred: np.ndarray[any, np.dtype[np.float64]] , y_true: np.ndarray) -> np.ndarray[any]:
+        samples = len(y_pred);
+        y_pred_clipped = np.clip(y_pred, 1e-7, 1-1e-7); # for escape infite value forx log()0
 
-layer2 = Layer_Dense(5, 2);
-layer2.forward(activation_relu.output);
-activation_softmax.forward(layer2.output);
+        if len(y_true.shape) == 1: # for just index [0, 2]
+            correct_confidences = y_pred_clipped[range(samples), y_true];
+        
+        elif len(y_true.shape) == 2: # for One Hot Encoding [[1, 0, 0], [0, 0, 1]]
+            correct_confidences = np.sum(y_pred_clipped * y_true, axis=1);
 
-activation_softmax.show_result();
+        negative_log_likelihoods = -np.log(correct_confidences);
+
+        return negative_log_likelihoods;
+
+class Loss(Loss_CategoricalCrossentropy):
+    sample_loss : np.ndarray[any] = None;
+    data_loss : float = None;
+
+    def __init__(self) -> None:
+        super().__init__()
+    
+    def calculate(self, output:np.ndarray[any, np.dtype[np.float64]], y:np.ndarray) -> float:
+        self.sample_loss = self.forward(output, y);
+        self.data_loss = np.mean(self.sample_loss);
+        return self.data_loss;
+    
+    def to_string(self) -> None:
+        print('sample_loss', self.sample_loss);
+        print('data_loss', self.data_loss);  
+
+
+
+        
+
+
+
+
  
