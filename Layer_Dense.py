@@ -88,7 +88,15 @@ class Loss(Loss_CategoricalCrossentropy):
         print('data_loss', self.data_loss);  
 
 
+class AccuracyCalculator:
 
+    def __init__(self) -> None:
+        pass
+
+    def calculate(self, output:np.ndarray[any, np.dtype[np.float64]], y: np.ndarray): # just support shape 1 for y
+        predictions = np.argmax(output, axis=1) # find max for each row
+        accuracy = np.mean(predictions==y) # is equals with labels ? 1 : 0 then get mean
+        return accuracy;
         
 
 

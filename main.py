@@ -24,7 +24,11 @@ def main():
     loss_calculator = ld.Loss();
     loss = loss_calculator.calculate(activation_softmax.output, y);
 
+    accurracy_calculator = ld.AccuracyCalculator();
+    accurracy = accurracy_calculator.calculate(activation_softmax.output, y);
+
     print('Loss', loss);
+    print('Accurracy', accurracy);
 
 if __name__ == "__main__":
     main()
