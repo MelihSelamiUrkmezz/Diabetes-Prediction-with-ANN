@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# taha temp files
+playground.py
+section1.py
+
 # C extensions
 *.so
 
