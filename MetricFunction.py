@@ -1,5 +1,15 @@
 import numpy as np;
 
+class Error_Calculator:
+    def __init__(self) -> None:
+        pass
+
+    def calculate(self, _y:np.ndarray, y:np.ndarray):
+        return y-_y;
+
+    def calculate_sample(self, _y:float, y:float):
+        return y-_y;
+
 class Loss_CategoricalCrossentropy:
     
     def __init__(self) -> None:
