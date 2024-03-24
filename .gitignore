@@ -4,8 +4,7 @@ __pycache__/
 *$py.class
 
 # taha temp files
-playground.py
-section1.py
+playground/
 
 # C extensions
 *.so
