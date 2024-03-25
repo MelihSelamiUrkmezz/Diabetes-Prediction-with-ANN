@@ -12,7 +12,7 @@ class Sigmoid:
 
     def derivative(self, inputs: np.ndarray[any, np.dtype[np.float64]]) -> np.ndarray[any, np.dtype[np.float64]]:
         s = self.forward(inputs);
-        self.output =  s * (1 - s);
+        self.output =  inputs * (1 - inputs);
         return self.output;
 
     def show_result(self) -> None:

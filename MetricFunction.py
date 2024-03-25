@@ -7,6 +7,9 @@ class Error_Calculator:
     def calculate(self, _y:np.ndarray, y:np.ndarray):
         return y-_y;
 
+    def calculate_alternative(self, _y:np.ndarray, y:np.ndarray):
+        return np.sum((y-_y)**2) /2;
+
     def calculate_sample(self, _y:float, y:float):
         return y-_y;
 
